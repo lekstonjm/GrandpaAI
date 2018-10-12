@@ -1,5 +1,5 @@
 CFLAGS=-std=c++11
-vpath=src
+build_obj_folder := $(shell mkdir -p obj)
 tests: test_reference test_node test_negater
 clean:
 	rm obj/*.o test_reference test_node test_negater
