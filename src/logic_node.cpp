@@ -1,4 +1,4 @@
-#include "node.hpp"
+#include "logic_node.hpp"
 #include <sstream>
 
 int NamedNode::_index = 0;
@@ -69,17 +69,17 @@ std::string Disjunction::toString() const {
 
 std::string Implication::toString()  const {
   std::stringstream ss;
-  ss << (head.isNull()?"":head->toString() ) << " => " << (body.isNull()?"":body->toString());
+  ss << (left.isNull()?"":left->toString() ) << " => " << (right.isNull()?"":right->toString());
   return ss.str();
 }
 
-std::string ExistantialQuantifier::toString() const {
+std::string Existantial::toString() const {
   std::stringstream ss;
   ss << "E(" << variable->toString() << ") ("<< formula->toString() << ")";
   return ss.str();
 }
 
-std::string UniversalQuantifier::toString() const {
+std::string Universal::toString() const {
   std::stringstream ss;
   ss << "A(" << variable->toString() << ") ("<< formula->toString() << ")";
   return ss.str();

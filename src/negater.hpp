@@ -1,10 +1,10 @@
- #ifndef _Negater_HPP_
- #define _Negater_HPP_
+#ifndef _Negater_HPP_
+#define _Negater_HPP_
 
- #include <unordered_map>
- #include <typeindex>
+#include <unordered_map>
+#include <typeindex>
 #include "reference.hpp"
-#include "node.hpp"
+#include "logic_node.hpp"
 
 struct Negater {
   typedef void (Negater::*NegateMethod)(const Ref<Formula> &input, Ref<Formula> &output);

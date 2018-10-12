@@ -1,7 +1,7 @@
 #include <iostream>
 #include "exception.hpp"
 #include "reference.hpp"
-#include "node.hpp"
+#include "logic_node.hpp"
 #include "negater.hpp"
 
 int main(int argc, char *argv[])
