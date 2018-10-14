@@ -14,3 +14,7 @@ void InvalidArgumentException::ThrowIf(bool condition) {
     throw InvalidArgumentException();
   }
 }
+
+void NotImplementedException::Throw() {
+  throw NotImplementedException();
+}

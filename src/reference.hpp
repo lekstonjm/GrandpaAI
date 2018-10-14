@@ -22,10 +22,15 @@ struct Ref {
   template<typename U>
   void assign(const Ref<U> &cp)  {
     clear();
-    pointer  = cp.pointer; counter = cp.counter;
+    pointer  = dynamic_cast<T*>(cp.pointer); counter = cp.counter;
     if (counter != NULL) { counter->Inc();}
   }
-
+  template<typename U>
+  Ref<U> cast() {
+    Ref<U> ref;
+    ref.assign<T>(*this);
+    return ref;
+  }
   Ref() { pointer = NULL; counter = NULL; }
   Ref(T *ptr) {  pointer = NULL; counter = NULL; if (ptr != NULL) { pointer = ptr; counter = new Counter(); } }
   Ref(const Ref<T> &cp) {

@@ -7,4 +7,8 @@ struct InvalidArgumentException {
   static void ThrowIf(bool);
 };
 
+struct NotImplementedException {
+  NotImplementedException() {}
+  static void Throw();
+};
 #endif
