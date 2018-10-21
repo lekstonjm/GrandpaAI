@@ -87,4 +87,17 @@ struct Implication : Formula {
   virtual std::string toString() const;
 };
 
+struct ExistantialQuantifier : Formula {
+  Ref<Formula> formula;
+  Ref<Variable> variable;
+  ExistantialQuantifier() {}
+  virtual std::string toString() const;
+};
+
+struct UniversalQuantifier : Formula {
+  Ref<Formula> formula;
+  Ref<Variable> variable;
+  UniversalQuantifier() {}
+  virtual std::string toString() const; 
+};
 #endif

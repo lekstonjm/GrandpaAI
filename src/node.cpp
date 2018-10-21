@@ -72,3 +72,15 @@ std::string Implication::toString()  const {
   ss << (head.isNull()?"":head->toString() ) << " => " << (body.isNull()?"":body->toString());
   return ss.str();
 }
+
+std::string ExistantialQuantifier::toString() const {
+  std::stringstream ss;
+  ss << "E(" << variable->toString() << ") ("<< formula->toString() << ")";
+  return ss.str();
+}
+
+std::string UniversalQuantifier::toString() const {
+  std::stringstream ss;
+  ss << "A(" << variable->toString() << ") ("<< formula->toString() << ")";
+  return ss.str();
+}

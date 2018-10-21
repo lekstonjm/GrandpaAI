@@ -11,7 +11,7 @@ struct Negater {
   std::unordered_map<std::type_index, NegateMethod> negater_method_map;
   Negater();
   void Negate(const Ref<Formula> &, Ref<Formula> &);
-  void NegatePredicate(const Ref<Formula> &, Ref<Formula> &);
+  void NegateStandard(const Ref<Formula> &, Ref<Formula> &);
   void NegateNegation(const Ref<Formula> &, Ref<Formula> &);
   void NegateDisjunction(const Ref<Formula> &, Ref<Formula> &);
   void NegateConjunction(const Ref<Formula> &, Ref<Formula> &);

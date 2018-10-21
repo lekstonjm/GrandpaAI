@@ -3,7 +3,12 @@
 #include <iostream>
 
 Negater::Negater() {
-  negater_method_map.insert(std::make_pair(std::type_index(typeid(Predicate)),&Negater::NegatePredicate));
+  negater_method_map.insert(std::make_pair(std::type_index(typeid(Variable)),&Negater::NegateStandard));
+  negater_method_map.insert(std::make_pair(std::type_index(typeid(Constant)),&Negater::NegateStandard));
+  negater_method_map.insert(std::make_pair(std::type_index(typeid(Function)),&Negater::NegateStandard));
+  negater_method_map.insert(std::make_pair(std::type_index(typeid(Predicate)),&Negater::NegateStandard));
+  negater_method_map.insert(std::make_pair(std::type_index(typeid(Equality)),&Negater::NegateStandard));
+  negater_method_map.insert(std::make_pair(std::type_index(typeid(Implication)),&Negater::NegateStandard));
   negater_method_map.insert(std::make_pair(std::type_index(typeid(Negation)),&Negater::NegateNegation));
   negater_method_map.insert(std::make_pair(std::type_index(typeid(Disjunction)),&Negater::NegateDisjunction));
   negater_method_map.insert(std::make_pair(std::type_index(typeid(Conjunction)),&Negater::NegateConjunction));
@@ -18,7 +23,7 @@ void Negater::Negate(const Ref<Formula> &input, Ref<Formula> &output) {
   (this->*method)(input, output);
 }
 
-void Negater::NegatePredicate(const Ref<Formula> &input, Ref<Formula> &output) {
+void Negater::NegateStandard(const Ref<Formula> &input, Ref<Formula> &output) {
     Ref<Negation> negation(new Negation());
     negation->formula.assign<Formula>(input);
     output.assign<Negation>(negation);
