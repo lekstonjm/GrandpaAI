@@ -21,11 +21,7 @@ struct NamedNode : virtual LogicNode {
     name = name_;
   }
   virtual std::string toString() const;
-private:
-  static int _index;
 };
-
-
 
 struct Term : virtual LogicNode {
   Term():LogicNode(){}
@@ -56,14 +52,10 @@ struct Predicate :  Formula, NamedNode, ArityNode {
     virtual std::string toString() const;
 };
 
-struct Binary : Formula {
+struct Equality : Formula {
   Ref<Term> right;
   Ref<Term> left;
-  Binary():Formula() {}
-};
-
-struct Equality : Binary {
-  Equality() : Binary() {}
+  Equality() : Formula() {}
   virtual std::string toString() const;
 };
 
@@ -89,8 +81,10 @@ struct Disjunction : Connective {
   virtual std::string toString() const;
 };
 
-struct Implication : Binary {
-  Implication():Binary(){}
+struct Implication : Formula {
+  Ref<Formula> right;
+  Ref<Formula> left;
+  Implication():Formula(){}
   virtual std::string toString() const;
 };
 

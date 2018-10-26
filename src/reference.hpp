@@ -20,13 +20,17 @@ struct Ref {
     if (counter != NULL && counter->Dec()) { delete counter; delete pointer;}
   }
   template<typename U>
+  bool is() const {
+    return (dynamic_cast<U*>(pointer) != NULL)?true:false;
+  }
+  template<typename U>
   void assign(const Ref<U> &cp)  {
     clear();
     pointer  = dynamic_cast<T*>(cp.pointer); counter = cp.counter;
     if (counter != NULL) { counter->Inc();}
   }
   template<typename U>
-  Ref<U> cast() {
+  Ref<U> cast() const {
     Ref<U> ref;
     ref.assign<T>(*this);
     return ref;
@@ -37,6 +41,7 @@ struct Ref {
     pointer = NULL; counter = NULL;
     assign<T>(cp);
   }
+
   Ref<T> &operator=(const Ref<T> &cp) {
     assign<T>(cp);
     return *this;

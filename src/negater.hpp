@@ -7,14 +7,17 @@
 #include "logic_node.hpp"
 
 struct Negater {
-  typedef void (Negater::*NegateMethod)(const Ref<Formula> &input, Ref<Formula> &output);
+  typedef void (Negater::*NegateMethod)(Ref<Formula> &input);
   std::unordered_map<std::type_index, NegateMethod> negater_method_map;
   Negater();
-  void Negate(const Ref<Formula> &, Ref<Formula> &);
-  void NegateStandard(const Ref<Formula> &, Ref<Formula> &);
-  void NegateNegation(const Ref<Formula> &, Ref<Formula> &);
-  void NegateDisjunction(const Ref<Formula> &, Ref<Formula> &);
-  void NegateConjunction(const Ref<Formula> &, Ref<Formula> &);
+  void Negate(Ref<Formula> &);
+  void NegateStandard(Ref<Formula> &);
+  void NegateNegation(Ref<Formula> &);
+  void NegateDisjunction(Ref<Formula> &);
+  void NegateConjunction(Ref<Formula> &);
+  void NegateExistantial(Ref<Formula> &);
+  void NegateUniversal(Ref<Formula> &);
+  void NegateImplication(Ref<Formula> &);
 };
 
 #endif

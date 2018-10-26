@@ -1,8 +1,6 @@
 #include "logic_node.hpp"
 #include <sstream>
 
-int NamedNode::_index = 0;
-
 std::string NamedNode::toString() const{
   return name;
 }
@@ -25,7 +23,7 @@ std::string Predicate::toString() const{
   ss << name;
   ss << "(";
   for(auto &term:terms) {
-    ss << (first?"":" ^ ") << (term.isNull()?"":term->toString());
+    ss << (first?"":", ") << (term.isNull()?"":term->toString());
     first = false;
   }
   ss << ")";
@@ -46,24 +44,20 @@ std::string Negation::toString() const {
 std::string Conjunction::toString() const {
   std::stringstream ss;
   bool first = true;
-  ss << "(";
   for(auto &formula:formulas) {
     ss << (first?"":" ^ ") << (formula.isNull()?"":formula->toString());
     first = false;
   }
-  ss << ")";
   return ss.str();
 }
 
 std::string Disjunction::toString() const {
   std::stringstream ss;
   bool first = true;
-  ss << "(" ;
   for(auto &formula:formulas) {
     ss << (first?"":" v ") << (formula.isNull()?"":formula->toString());
     first = false;
   }
-  ss << ")";
   return ss.str();
 }
 
