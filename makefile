@@ -3,19 +3,19 @@ build_obj_folder := $(shell mkdir -p obj)
 build_bin_folder := $(shell mkdir -p bin)
 tests: test_reference test_node test_negater test_implication_cnf_transformer test_negation_cnf_transformer test_disjunction_cnf_transformer
 clean:
-	rm obj/*.o test_*
+	rm -r obj bin
 test_reference: test_reference.o exception.o
-	g++ -o test_reference obj/test_reference.o obj/exception.o
+	g++ -o bin/test_reference obj/test_reference.o obj/exception.o
 test_node: test_node.o logic_node.o exception.o
-	g++ -o test_node  obj/logic_node.o obj/test_node.o obj/exception.o
+	g++ -o bin/test_node  obj/logic_node.o obj/test_node.o obj/exception.o
 test_negater: test_negater.o negater.o logic_node.o exception.o
-	g++ -o test_negater obj/logic_node.o obj/negater.o obj/test_negater.o obj/exception.o
+	g++ -o bin/test_negater obj/logic_node.o obj/negater.o obj/test_negater.o obj/exception.o
 test_implication_cnf_transformer: test_implication_cnf_transformer.o implication_cnf_transformer.o logic_node.o exception.o
-	g++ -o test_implication_cnf_transformer obj/test_implication_cnf_transformer.o obj/implication_cnf_transformer.o  obj/logic_node.o obj/exception.o
+	g++ -o bin/test_implication_cnf_transformer obj/test_implication_cnf_transformer.o obj/implication_cnf_transformer.o  obj/logic_node.o obj/exception.o
 test_negation_cnf_transformer: test_negation_cnf_transformer.o negation_cnf_transformer.o negater.o logic_node.o exception.o
-	g++ -o test_negation_cnf_transformer obj/test_negation_cnf_transformer.o obj/negation_cnf_transformer.o  obj/negater.o obj/logic_node.o obj/exception.o
+	g++ -o bin/test_negation_cnf_transformer obj/test_negation_cnf_transformer.o obj/negation_cnf_transformer.o  obj/negater.o obj/logic_node.o obj/exception.o
 test_disjunction_cnf_transformer: test_disjunction_cnf_transformer.o disjunction_cnf_transformer.o logic_node.o exception.o
-	g++ -o test_disjunction_cnf_transformer obj/test_disjunction_cnf_transformer.o obj/disjunction_cnf_transformer.o  obj/logic_node.o obj/exception.o
+	g++ -o bin/test_disjunction_cnf_transformer obj/test_disjunction_cnf_transformer.o obj/disjunction_cnf_transformer.o  obj/logic_node.o obj/exception.o
 test_reference.o: src/test_reference.cpp
 	g++ $(CFLAGS) -o obj/test_reference.o -c src/test_reference.cpp
 test_node.o: src/test_node.cpp
