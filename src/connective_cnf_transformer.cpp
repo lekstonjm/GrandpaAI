@@ -1,4 +1,5 @@
 #include "connective_cnf_transformer.hpp"
+#include <algorithm>
 
 
 ConnectiveCNFTransformer::ConnectiveCNFTransformer() {
@@ -55,31 +56,55 @@ void ConnectiveCNFTransformer::TransformQuantifier(Ref<Formula> &input) {
 
 void ConnectiveCNFTransformer::TransformConjunction(Ref<Formula> &input) {
   for (auto& formula:input.as<Conjunction>()->formulas) {
-    Transform(formula);
+    if (formula.is<Conjunction>()) {
+      Fusion(input, formula);
+      Transform(input);
+      break;
+    } else {
+      Transform(formula);
+    }
   }
 }
 
 void ConnectiveCNFTransformer::TransformDisjunction(Ref<Formula> &input) {
-  NotImplementedException::Throw();
-
-  Ref<Conjunction> c;
-  Ref<Disjunction> d;
-  d.assign<Formula> (input);
-  for (auto& formula:d.as<Disjunction>()->formulas) {
-    if(formula.is<Conjunction>()) {
-      c.assign<Formula>(formula);
+  for (auto& formula:input.as<Disjunction>()->formulas) {
+    if (formula.is<Disjunction>()) {
+      Fusion(input,formula);
+      Transform(input);
       break;
+    } else if(formula.is<Conjunction>()) {
+      DistributeDisjunction(input, formula);
+      Transform(input);
+      break;
+    } else {
+      Transform(formula);
     }
   }
-  if (!c.isNull()) {
-    Ref<Formula> r_c(new Conjunction());
-    for (auto& formula_d:d.as<Disjunction>()->formulas) {
-      Ref<Formula> r_d(new Disjunction());
-      for (auto& formula_c:c.as<Conjunction>()->formulas) {
-        r_d.as<Disjunction>()->formulas.push_back(formula_d);
-        r_d.as<Disjunction>()->formulas.push_back(formula_c);
+}
+// ( A ^ ( B ^ C ) ) => ( A ^ B  ^ C )
+// ( A ^ B ^ ( C ^ D ) ^ E ) => ( A ^ B ^ E ^ C ^ D )
+void ConnectiveCNFTransformer::Fusion(Ref<Formula> &input, Ref<Formula> &connective) {
+  input.as<Connective>()->formulas.erase(std::remove_if(
+    input.as<Connective>()->formulas.begin(),input.as<Connective>()->formulas.end()
+    ,[&](Ref<Formula> &formula) { return formula == connective; } ));
+  for (auto &formula:connective.as<Connective>()->formulas) {
+    input.as<Connective>()->formulas.push_back(formula);
+  }
+}
+// (A v (B ^ C) ) => (  ( A v B ) ^ ( A v C ) )
+// ( A ^ B) v ( C ^ D ) => ( (A ^ B ) v C ) ^ ( A ^ B ) v D ) => ( A v C ) ^ (B v C ) ^ ( A v D ) ^ ( B v D ) 
+// ( A v B v ( C ^ D ) ) => ( A v ( ( B v C ) ^ (B v D ) ) ) = > ( A v B v C ) ^ ( A v B v D ) 
+void ConnectiveCNFTransformer::DistributeDisjunction(Ref<Formula> &input, Ref<Formula> &into_conjunction) {
+  Ref<Conjunction> conjunction_result(new Conjunction());
+  for (auto& conjunction_formula : into_conjunction.as<Connective>()->formulas) {
+    Ref<Formula> disjunction_result(new Disjunction());
+    disjunction_result.as<Disjunction>()->formulas.push_back(conjunction_formula);
+    for (auto& disjunction_formula : input.as<Disjunction>()->formulas) {
+      if (! (disjunction_formula == into_conjunction) ) {
+        disjunction_result.as<Disjunction>()->formulas.push_back(disjunction_formula);
       }
-      r_c.as<Conjunction>()->formulas.push_back(r_d);
     }
+    conjunction_result->formulas.push_back(disjunction_result);
   }
+  input.assign<Conjunction>(conjunction_result);
 }

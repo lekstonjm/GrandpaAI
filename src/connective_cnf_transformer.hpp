@@ -10,12 +10,15 @@ struct ConnectiveCNFTransformer {
     std::unordered_map<std::type_index, TransformMethod> transform_method_map;
     ConnectiveCNFTransformer();
     void Transform(Ref<Formula> &);
+private:
     void TransformStandard(Ref<Formula> &input);
     void TransformNegation(Ref<Formula> &input);
     void TransformImplication(Ref<Formula> &input);
     void TransformConjunction(Ref<Formula> &input);
     void TransformDisjunction(Ref<Formula> &input);
     void TransformQuantifier(Ref<Formula> &input);
+    void Fusion(Ref<Formula>& input, Ref<Formula> &connective);
+    void DistributeDisjunction(Ref<Formula> &input, Ref<Formula> &conjunction);
 };
 
 #endif

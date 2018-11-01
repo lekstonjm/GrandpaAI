@@ -46,9 +46,11 @@ struct Ref {
     assign<T>(cp);
     return *this;
   }
+  
   virtual ~Ref() {
     clear();
   }
+
   T &operator*() {return *pointer;}
   const T &operator*() const {return *pointer;}
   T *operator->() {return pointer;}
@@ -59,5 +61,9 @@ struct Ref {
   const U *as() const { return dynamic_cast<U*>(pointer); }
   bool isNull() const { return pointer == NULL;}
 };
+template<typename T,typename U>
+bool operator==(const Ref<T> & t1, const Ref<U> &t2) {
+  return (void*)t1.pointer == (void*)t2.pointer;
+}
 
 #endif
