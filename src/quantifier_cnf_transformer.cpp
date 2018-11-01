@@ -1,33 +1,33 @@
-#include "quantifier_migration_cnf_transformer.hpp"
+#include "quantifier_cnf_transformer.hpp"
 
-QuantifierMigrationCNFTransformer::QuantifierMigrationCNFTransformer(){
+QuantifierCNFTransformer::QuantifierCNFTransformer(){
     transform_method_map.insert(std::make_pair(
         std::type_index(typeid(Predicate))
-        , &QuantifierMigrationCNFTransformer::TransformStandard));
+        , &QuantifierCNFTransformer::TransformStandard));
     transform_method_map.insert(std::make_pair(
         std::type_index(typeid(Equality))
-        , &QuantifierMigrationCNFTransformer::TransformStandard));        
+        , &QuantifierCNFTransformer::TransformStandard));        
     transform_method_map.insert(std::make_pair(
         std::type_index(typeid(Negation))        
-        , &QuantifierMigrationCNFTransformer::TransformNegation));
+        , &QuantifierCNFTransformer::TransformNegation));
     transform_method_map.insert(std::make_pair(
         std::type_index(typeid(Implication))
-        , &QuantifierMigrationCNFTransformer::TransformImplication));
+        , &QuantifierCNFTransformer::TransformImplication));
     transform_method_map.insert(
         std::make_pair(std::type_index(typeid(Disjunction))
-        , &QuantifierMigrationCNFTransformer::TransformConnective));
+        , &QuantifierCNFTransformer::TransformConnective));
     transform_method_map.insert(
         std::make_pair(std::type_index(typeid(Conjunction))
-        , &QuantifierMigrationCNFTransformer::TransformConnective));
+        , &QuantifierCNFTransformer::TransformConnective));
     transform_method_map.insert(
         std::make_pair(std::type_index(typeid(Existantial))
-        , &QuantifierMigrationCNFTransformer::TransformExistantial));
+        , &QuantifierCNFTransformer::TransformExistantial));
     transform_method_map.insert(std::make_pair(
         std::type_index(typeid(Universal))
-        , &QuantifierMigrationCNFTransformer::TransformUniversal));
+        , &QuantifierCNFTransformer::TransformUniversal));
 }
 
-void QuantifierMigrationCNFTransformer::Transform(Ref<Formula> &input) {
+void QuantifierCNFTransformer::Transform(Ref<Formula> &input) {
     Ref<Universal> root_universal(new Universal());
     Ref<Existantial> root_existantial(new Existantial());
     Transform(input, root_universal, root_existantial);
@@ -36,7 +36,7 @@ void QuantifierMigrationCNFTransformer::Transform(Ref<Formula> &input) {
     input.assign<Universal>(root_universal);    
 }
 
-void QuantifierMigrationCNFTransformer::Transform(Ref<Formula> &input
+void QuantifierCNFTransformer::Transform(Ref<Formula> &input
     , Ref<Universal> &root_universal
     , Ref<Existantial> &root_existantial) {
     std::type_index node_type_index = std::type_index(typeid(*input));
@@ -47,13 +47,13 @@ void QuantifierMigrationCNFTransformer::Transform(Ref<Formula> &input
     (this->*method)(input, root_universal, root_existantial);
 }
 
-void QuantifierMigrationCNFTransformer::TransformStandard(Ref<Formula> &input
+void QuantifierCNFTransformer::TransformStandard(Ref<Formula> &input
     , Ref<Universal> &root_universal
     , Ref<Existantial> &root_existantial) {
 
 }
 
-void QuantifierMigrationCNFTransformer::TransformImplication(Ref<Formula> &input
+void QuantifierCNFTransformer::TransformImplication(Ref<Formula> &input
     , Ref<Universal> &root_universal
     , Ref<Existantial> &root_existantial) {
     Ref<Implication> implication;
@@ -62,7 +62,7 @@ void QuantifierMigrationCNFTransformer::TransformImplication(Ref<Formula> &input
     Transform(implication->right, root_universal, root_existantial);
 }
 
-void QuantifierMigrationCNFTransformer::TransformNegation(Ref<Formula> &input
+void QuantifierCNFTransformer::TransformNegation(Ref<Formula> &input
     , Ref<Universal> &root_universal
     , Ref<Existantial> &root_existantial) {
     Ref<Negation> negation;
@@ -70,7 +70,7 @@ void QuantifierMigrationCNFTransformer::TransformNegation(Ref<Formula> &input
     Transform(negation->formula, root_universal, root_existantial);
 }
 
-void QuantifierMigrationCNFTransformer::TransformConnective(Ref<Formula> &input
+void QuantifierCNFTransformer::TransformConnective(Ref<Formula> &input
     , Ref<Universal> &root_universal
     , Ref<Existantial> &root_existantial) {
     Ref<Connective> connective;
@@ -79,7 +79,7 @@ void QuantifierMigrationCNFTransformer::TransformConnective(Ref<Formula> &input
         Transform(formula, root_universal, root_existantial);
     }
 }
-void QuantifierMigrationCNFTransformer::TransformUniversal(Ref<Formula> &input
+void QuantifierCNFTransformer::TransformUniversal(Ref<Formula> &input
     , Ref<Universal> &root_universal
     , Ref<Existantial> &root_existantial) {
     Ref<Universal> universal;
@@ -91,7 +91,7 @@ void QuantifierMigrationCNFTransformer::TransformUniversal(Ref<Formula> &input
     Transform(input, root_universal, root_existantial);
 }
 
-void QuantifierMigrationCNFTransformer::TransformExistantial(Ref<Formula> &input
+void QuantifierCNFTransformer::TransformExistantial(Ref<Formula> &input
     , Ref<Universal> &root_universal
     , Ref<Existantial> &root_existantial) {
     Ref<Existantial> existantial;

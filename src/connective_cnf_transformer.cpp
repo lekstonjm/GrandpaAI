@@ -1,34 +1,34 @@
-#include "disjunction_cnf_transformer.hpp"
+#include "connective_cnf_transformer.hpp"
 
 
-DisjunctionCNFTransformer::DisjunctionCNFTransformer() {
+ConnectiveCNFTransformer::ConnectiveCNFTransformer() {
   transform_method_map.insert(std::make_pair(
       std::type_index(typeid(Predicate))
-      , &DisjunctionCNFTransformer::TransformStandard));
+      , &ConnectiveCNFTransformer::TransformStandard));
   transform_method_map.insert(std::make_pair(
       std::type_index(typeid(Equality))
-      , &DisjunctionCNFTransformer::TransformStandard));
+      , &ConnectiveCNFTransformer::TransformStandard));
   transform_method_map.insert(std::make_pair(
       std::type_index(typeid(Negation))
-      , &DisjunctionCNFTransformer::TransformNegation));
+      , &ConnectiveCNFTransformer::TransformNegation));
   transform_method_map.insert(std::make_pair(
       std::type_index(typeid(Implication))
-      , &DisjunctionCNFTransformer::TransformImplication));
+      , &ConnectiveCNFTransformer::TransformImplication));
   transform_method_map.insert(
       std::make_pair(std::type_index(typeid(Disjunction))
-      , &DisjunctionCNFTransformer::TransformDisjunction));
+      , &ConnectiveCNFTransformer::TransformDisjunction));
   transform_method_map.insert(
       std::make_pair(std::type_index(typeid(Conjunction))
-      , &DisjunctionCNFTransformer::TransformConjunction));
+      , &ConnectiveCNFTransformer::TransformConjunction));
   transform_method_map.insert(
       std::make_pair(std::type_index(typeid(Existantial))
-      , &DisjunctionCNFTransformer::TransformQuantifier));
+      , &ConnectiveCNFTransformer::TransformQuantifier));
   transform_method_map.insert(std::make_pair(
       std::type_index(typeid(Universal))
-      , &DisjunctionCNFTransformer::TransformQuantifier));
+      , &ConnectiveCNFTransformer::TransformQuantifier));
 }
 
-void DisjunctionCNFTransformer::Transform(Ref<Formula> &input) {
+void ConnectiveCNFTransformer::Transform(Ref<Formula> &input) {
   std::type_index node_type_index = std::type_index(typeid(*input));
   TransformMethod method = transform_method_map[node_type_index];
   if (method == NULL) {
@@ -37,29 +37,29 @@ void DisjunctionCNFTransformer::Transform(Ref<Formula> &input) {
   (this->*method)(input);
 }
 
-void DisjunctionCNFTransformer::TransformStandard(Ref<Formula> &input) {
+void ConnectiveCNFTransformer::TransformStandard(Ref<Formula> &input) {
 }
 
-void DisjunctionCNFTransformer::TransformNegation(Ref<Formula> &input) {
+void ConnectiveCNFTransformer::TransformNegation(Ref<Formula> &input) {
   Transform(input.as<Negation>()->formula);
 }
 
-void DisjunctionCNFTransformer::TransformImplication(Ref<Formula> &input) {
+void ConnectiveCNFTransformer::TransformImplication(Ref<Formula> &input) {
   Transform(input.as<Implication>()->right);
   Transform(input.as<Implication>()->left);
 }
 
-void DisjunctionCNFTransformer::TransformQuantifier(Ref<Formula> &input) {
+void ConnectiveCNFTransformer::TransformQuantifier(Ref<Formula> &input) {
   Transform(input.as<Quantifier>()->formula);
 }
 
-void DisjunctionCNFTransformer::TransformConjunction(Ref<Formula> &input) {
+void ConnectiveCNFTransformer::TransformConjunction(Ref<Formula> &input) {
   for (auto& formula:input.as<Conjunction>()->formulas) {
     Transform(formula);
   }
 }
 
-void DisjunctionCNFTransformer::TransformDisjunction(Ref<Formula> &input) {
+void ConnectiveCNFTransformer::TransformDisjunction(Ref<Formula> &input) {
   NotImplementedException::Throw();
 
   Ref<Conjunction> c;

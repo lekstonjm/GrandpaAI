@@ -79,7 +79,7 @@ std::string Existantial::toString() const {
     ss << (first?"":", ") << variable->toString();
     first = false;  
   }
-  ss << ") ("<< formula->toString() << ")";
+  ss << ") ( "<< formula->toString() << " )";
   return ss.str();
 }
 
@@ -91,6 +91,6 @@ std::string Universal::toString() const {
     ss << (first?"":", ") << variable->toString();  
     first = false;  
   }
-  ss << ") ("<< formula->toString() << ")";
+  ss << ") ( "<< formula->toString() << " )";
   return ss.str();
 }

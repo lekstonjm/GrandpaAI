@@ -1,15 +1,15 @@
-#ifndef _QuantifierMigrationCNFTransformer_HPP_
-#define _QuantifierMigrationCNFTransformer_HPP_
+#ifndef _QuantifierCNFTransformer_HPP_
+#define _QuantifierCNFTransformer_HPP_
 
 #include <unordered_map>
 #include <typeindex>
 #include "reference.hpp"
 #include "logic_node.hpp"
 
-struct QuantifierMigrationCNFTransformer {
-    typedef void (QuantifierMigrationCNFTransformer::*TransformMethod)(Ref<Formula> &, Ref<Universal> &, Ref<Existantial> &);
+struct QuantifierCNFTransformer {
+    typedef void (QuantifierCNFTransformer::*TransformMethod)(Ref<Formula> &, Ref<Universal> &, Ref<Existantial> &);
     std::unordered_map<std::type_index, TransformMethod> transform_method_map;
-    QuantifierMigrationCNFTransformer();
+    QuantifierCNFTransformer();
     void Transform(Ref<Formula> &);
     void Transform(Ref<Formula> &, Ref<Universal> &, Ref<Existantial> &);
     void TransformStandard(Ref<Formula> &, Ref<Universal> &, Ref<Existantial> &);

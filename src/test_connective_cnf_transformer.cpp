@@ -1,4 +1,4 @@
-#include "disjunction_cnf_transformer.hpp"
+#include "connective_cnf_transformer.hpp"
 #include "logic_node.hpp"
 #include "reference.hpp"
 #include "exception.hpp"
@@ -26,7 +26,7 @@ int main() {
     d1.as<Disjunction>()->formulas.push_back(c2);
     // ( P7 v (P1 ^ P2 ^ P3) v (P4 ^ P5 ^ P6) )
     std::cout << d1->toString() << std::endl;
-    DisjunctionCNFTransformer transformer;
+    ConnectiveCNFTransformer transformer;
     transformer.Transform(d1);
     // ( P7 v P1 v P4) ^ (P7 v P1 v P5) ^ (P7 v P1 v P6 ) ^ (P7 v P2 v P4) ^ (P7 v P2 v P5)...
     std::cout << d1->toString() << std::endl;

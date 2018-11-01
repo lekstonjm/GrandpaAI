@@ -5,10 +5,10 @@
 #include "reference.hpp"
 #include "logic_node.hpp"
 
-struct DisjunctionCNFTransformer {
-    typedef void (DisjunctionCNFTransformer::*TransformMethod)(Ref<Formula> &);
+struct ConnectiveCNFTransformer {
+    typedef void (ConnectiveCNFTransformer::*TransformMethod)(Ref<Formula> &);
     std::unordered_map<std::type_index, TransformMethod> transform_method_map;
-    DisjunctionCNFTransformer();
+    ConnectiveCNFTransformer();
     void Transform(Ref<Formula> &);
     void TransformStandard(Ref<Formula> &input);
     void TransformNegation(Ref<Formula> &input);
