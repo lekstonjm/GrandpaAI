@@ -44,20 +44,24 @@ std::string Negation::toString() const {
 std::string Conjunction::toString() const {
   std::stringstream ss;
   bool first = true;
+  ss << "( ";
   for(auto &formula:formulas) {
     ss << (first?"":" ^ ") << (formula.isNull()?"":formula->toString());
     first = false;
   }
+  ss << " )";  
   return ss.str();
 }
 
 std::string Disjunction::toString() const {
   std::stringstream ss;
   bool first = true;
+  ss << "( ";
   for(auto &formula:formulas) {
     ss << (first?"":" v ") << (formula.isNull()?"":formula->toString());
     first = false;
   }
+  ss << " )";
   return ss.str();
 }
 

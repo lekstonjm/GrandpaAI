@@ -53,6 +53,10 @@ struct Ref {
   const T &operator*() const {return *pointer;}
   T *operator->() {return pointer;}
   const T*operator->()const{return pointer;}
+  template<typename U>
+  U *as() { return dynamic_cast<U*>(pointer); }
+  template<typename U>
+  const U *as() const { return dynamic_cast<U*>(pointer); }
   bool isNull() const { return pointer == NULL;}
 };
 
