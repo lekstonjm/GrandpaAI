@@ -62,11 +62,11 @@ int main() {
             N->formula.assign<Predicate>(Color);
             C2->formulas.push_back(Chat.cast<Formula>());
             C2->formulas.push_back(N.cast<Formula>());
-            EX->variable = X;
+            EX->variables.push_back(X);
             EX->formula.assign<Conjunction>(C2);
             C1->formulas.push_back(Nuit.cast<Formula>());
             C1->formulas.push_back(EX.cast<Formula>());
-            ET->variable = T;
+            ET->variables.push_back(T);
             ET->formula.assign<Conjunction>(C1);
             Ref<Negation> N2(new Negation());
             N2->formula.assign<Existantial>(ET);

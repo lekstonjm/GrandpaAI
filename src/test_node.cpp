@@ -8,14 +8,17 @@ int main() {
 
   Ref<Predicate> Q(new Predicate("Q"));
   Ref<Variable> X(new Variable("X"));
+  Ref<Variable> Y(new Variable("Y"));
   Q->terms.push_back(X.cast<Term>());
+  Q->terms.push_back(Y.cast<Term>());
 
   Ref<Implication> I(new Implication());
   I->left.assign<Predicate>(Q);
   I->right.assign<Predicate>(P);
 
   Ref<Universal> UX(new Universal());
-  UX->variable = X;
+  UX->variables.push_back(X);
+  UX->variables.push_back(Y);
   UX->formula.assign<Implication>(I);
 
   std::cout << UX->toString() << std::endl;

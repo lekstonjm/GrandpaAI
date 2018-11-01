@@ -69,12 +69,24 @@ std::string Implication::toString()  const {
 
 std::string Existantial::toString() const {
   std::stringstream ss;
-  ss << "E(" << variable->toString() << ") ("<< formula->toString() << ")";
+  bool first = true;
+  ss << "E(";
+  for (auto &variable : variables) {
+    ss << (first?"":", ") << variable->toString();
+    first = false;  
+  }
+  ss << ") ("<< formula->toString() << ")";
   return ss.str();
 }
 
 std::string Universal::toString() const {
   std::stringstream ss;
-  ss << "A(" << variable->toString() << ") ("<< formula->toString() << ")";
+  bool first = true;
+  ss << "A(";
+  for (auto &variable : variables) {
+    ss << (first?"":", ") << variable->toString();  
+    first = false;  
+  }
+  ss << ") ("<< formula->toString() << ")";
   return ss.str();
 }

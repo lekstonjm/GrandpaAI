@@ -79,7 +79,7 @@ void Negater::NegateExistantial(Ref<Formula> &input) {
   existantial.assign<Formula>(input);
   Negate(existantial->formula);
   Ref<Universal> universal(new Universal);
-  universal->variable = existantial->variable;
+  universal->variables = existantial->variables;
   universal->formula = existantial->formula;
   input.assign<Universal>(universal);
 }
@@ -89,7 +89,7 @@ void Negater::NegateUniversal(Ref<Formula> &input) {
   universal.assign<Formula>(input);
   Negate(universal->formula);
   Ref<Existantial> existantial(new Existantial());
-  existantial->variable = universal->variable;
+  existantial->variables = universal->variables;
   existantial->formula = universal->formula;
   input.assign<Existantial>(existantial);
 }

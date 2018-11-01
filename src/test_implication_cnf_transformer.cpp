@@ -34,11 +34,11 @@ int main() {
             Color->terms.push_back(Gris.cast<Term>());
             IX->left = Chat.cast<Formula>();
             IX->right = Color.cast<Formula>();
-            AllX->variable = X;
+            AllX->variables.push_back(X);
             AllX->formula = IX.cast<Formula>();
             IT->left = Nuit.cast<Formula>();
             IT->right = AllX.cast<Formula>();
-            AllT->variable = T;
+            AllT->variables.push_back(T);
             AllT->formula = IT.cast<Formula>();
             Ref<Formula> input;
             input.assign<Universal>(AllT);

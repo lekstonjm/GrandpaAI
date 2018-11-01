@@ -90,7 +90,7 @@ struct Implication : Formula {
 
 struct Quantifier : Formula {
   Ref<Formula> formula;
-  Ref<Variable> variable;
+  std::vector<Ref<Variable>> variables;
   Quantifier() {}
 };
 
