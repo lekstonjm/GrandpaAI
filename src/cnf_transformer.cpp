@@ -1,6 +1,8 @@
 #include "cnf_transformer.hpp"
-void CNFTransformer::Transform(const Ref<Formula> &input, Ref<Formula> &output) {
-  TransformImplication(input, output);
-}
-void CNFTransformer::TransformImplication(const Ref<Formula> &input, Ref<Formula> &output) {
+
+void CNFTransformer::Transform(Ref<Formula> &input) {
+  implication_transformer.Transform(input);
+  negation_transformer.Transform(input);
+  quantifier_transformer.Transform(input);
+  connective_transformer.Transform(input);
 }

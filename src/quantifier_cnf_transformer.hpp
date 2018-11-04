@@ -7,10 +7,9 @@
 #include "logic_node.hpp"
 
 struct QuantifierCNFTransformer {
-    typedef void (QuantifierCNFTransformer::*TransformMethod)(Ref<Formula> &, Ref<Universal> &, Ref<Existantial> &);
-    std::unordered_map<std::type_index, TransformMethod> transform_method_map;
     QuantifierCNFTransformer();
     void Transform(Ref<Formula> &);
+private:
     void Transform(Ref<Formula> &, Ref<Universal> &, Ref<Existantial> &);
     void TransformStandard(Ref<Formula> &, Ref<Universal> &, Ref<Existantial> &);
     void TransformImplication(Ref<Formula> &, Ref<Universal> &, Ref<Existantial> &);
@@ -18,6 +17,8 @@ struct QuantifierCNFTransformer {
     void TransformConnective(Ref<Formula> &, Ref<Universal> &, Ref<Existantial> &);
     void TransformUniversal(Ref<Formula> &, Ref<Universal> &, Ref<Existantial> &);
     void TransformExistantial(Ref<Formula> &, Ref<Universal> &, Ref<Existantial> &);
+    typedef void (QuantifierCNFTransformer::*TransformMethod)(Ref<Formula> &, Ref<Universal> &, Ref<Existantial> &);
+    std::unordered_map<std::type_index, TransformMethod> transform_method_map;
 };
 
 #endif

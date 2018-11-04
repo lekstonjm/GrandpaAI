@@ -5,10 +5,11 @@ std::string NamedNode::toString() const{
   return name;
 }
 
+
 std::string Function::toString() const {
   std::stringstream ss;
   bool first = true;
-  ss << name;
+  ss << prototype->name << "/" << prototype->arity;
   ss << "(";
   for(auto &term:terms) {
     ss << (first?"":" ^ ") << (term.isNull()?"":term->toString());
@@ -20,7 +21,7 @@ std::string Function::toString() const {
 std::string Predicate::toString() const{
   std::stringstream ss;
   bool first = true;
-  ss << name;
+  ss << prototype->name << "/" << prototype->arity;
   ss << "(";
   for(auto &term:terms) {
     ss << (first?"":", ") << (term.isNull()?"":term->toString());

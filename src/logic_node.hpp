@@ -15,6 +15,12 @@ struct  LogicNode {
   virtual std::string toString() const = 0;
 };
 
+struct Prototype {
+  Prototype(const std::string &name_, int arity_) : name(name_), arity(arity_) {}
+  std::string name;
+  int arity;
+};
+
 struct NamedNode : virtual LogicNode {
   std::string name;
   NamedNode(const std::string &name_):LogicNode() {
@@ -27,9 +33,16 @@ struct Term : virtual LogicNode {
   Term():LogicNode(){}
 };
 
-struct ArityNode : virtual LogicNode {
+
+struct FunctionalNode : virtual LogicNode {
+  FunctionalNode(const std::string &name_, int arity_) {
+    prototype = Ref<Prototype>(new Prototype(name_, arity_));
+  }
+  FunctionalNode(const Ref<Prototype> &prototype_):prototype(prototype_) {    
+    InvalidArgumentException::ThrowIf(prototype.isNull());
+  }
   std::vector<Ref<Term>> terms;
-  int computeArity() {return terms.size();}
+  Ref<Prototype> prototype;
 };
 
 struct Constant : Term, NamedNode {
@@ -40,15 +53,19 @@ struct  Variable : Term, NamedNode  {
   Variable(const std::string &name):Term(),NamedNode(name){}
 };
 
-struct Function : Term, NamedNode, ArityNode {
-  Function(const std::string &name) : Term(),NamedNode(name), ArityNode() {}
+
+struct Function : Term,  FunctionalNode {
+  Function(const Ref<Prototype> &prototype_) : Term(), FunctionalNode(prototype_) {}
+  Function(const std::string &name, int arity = 0) : Term(), FunctionalNode(name, arity) {}
   virtual std::string toString() const;
 };
 
 struct Formula : virtual LogicNode { };
 
-struct Predicate :  Formula, NamedNode, ArityNode {
-    Predicate(const std::string &name):Formula(), NamedNode(name), ArityNode() {}
+
+struct Predicate :  Formula, FunctionalNode {
+    Predicate(const Ref<Prototype> &prototype_):Formula(), FunctionalNode(prototype_) {}
+    Predicate(const std::string &name, int arity=0):Formula(), FunctionalNode(name, arity) {}
     virtual std::string toString() const;
 };
 
