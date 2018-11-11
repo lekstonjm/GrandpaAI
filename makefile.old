@@ -32,35 +32,35 @@ test_quantifier_cnf_transformer: test_quantifier_cnf_transformer.o quantifier_cn
 	g++ -o bin/2_transformer/cnf/test_quantifier_cnf_transformer obj/test_quantifier_cnf_transformer.o obj/quantifier_cnf_transformer.o  obj/logic_node.o obj/exception.o
 test_cnf_transformer: test_cnf_transformer.o cnf_transformer.o quantifier_cnf_transformer.o connective_cnf_transformer.o negation_cnf_transformer.o implication_cnf_transformer.o negater.o logic_node.o exception.o  
 	g++ -o bin/2_transformer/test_cnf_transformer obj/test_cnf_transformer.o obj/cnf_transformer.o obj/quantifier_cnf_transformer.o obj/connective_cnf_transformer.o obj/negation_cnf_transformer.o obj/implication_cnf_transformer.o obj/negater.o obj/logic_node.o obj/exception.o
-test_reference.o: src/0_infrastructure/test_reference.cpp
+test_reference.o: include/0_infrastructure/exception.hpp include/0_infrastructure/reference.hpp src/0_infrastructure/test_reference.cpp
 	g++ $(CFLAGS) -o obj/test_reference.o -c src/0_infrastructure/test_reference.cpp
-test_logic_node.o: src/1_core/test_logic_node.cpp
+test_logic_node.o: include/0_infrastructure/exception.hpp include/0_infrastructure/reference.hpp include/1_core/logic_node.hpp src/1_core/test_logic_node.cpp
 	g++ $(CFLAGS) -o obj/test_node.o -c src/1_core/test_logic_node.cpp
-test_negater.o: src/2_transformer/test_negater.cpp
+test_negater.o: include/0_infrastructure/exception.hpp include/0_infrastructure/reference.hpp include/1_core/logic_node.hpp src/2_transformer/test_negater.cpp
 	g++ $(CFLAGS) -o obj/test_negater.o -c src/2_transformer/test_negater.cpp
-test_implication_cnf_transformer.o: src/2_transformer/cnf/test_implication_cnf_transformer.cpp
+test_implication_cnf_transformer.o: include/0_infrastructure/exception.hpp include/0_infrastructure/reference.hpp include/1_core/logic_node.hpp src/2_transformer/cnf/test_implication_cnf_transformer.cpp
 	g++ $(CFLAGS) -o obj/test_implication_cnf_transformer.o -c src/2_transformer/cnf/test_implication_cnf_transformer.cpp
-test_negation_cnf_transformer.o: src/2_transformer/cnf/test_negation_cnf_transformer.cpp
+test_negation_cnf_transformer.o: include/0_infrastructure/exception.hpp include/0_infrastructure/reference.hpp include/1_core/logic_node.hpp src/2_transformer/cnf/test_negation_cnf_transformer.cpp
 	g++ $(CFLAGS) -o obj/test_negation_cnf_transformer.o -c src/2_transformer/cnf/test_negation_cnf_transformer.cpp
-test_connective_cnf_transformer.o: src/2_transformer/cnf/test_connective_cnf_transformer.cpp
+test_connective_cnf_transformer.o: include/0_infrastructure/exception.hpp include/0_infrastructure/reference.hpp include/1_core/logic_node.hpp src/2_transformer/cnf/test_connective_cnf_transformer.cpp
 	g++ $(CFLAGS) -o obj/test_connective_cnf_transformer.o -c src/2_transformer/cnf/test_connective_cnf_transformer.cpp
-test_quantifier_cnf_transformer.o: src/2_transformer/cnf/test_quantifier_cnf_transformer.cpp
+test_quantifier_cnf_transformer.o: include/0_infrastructure/exception.hpp include/0_infrastructure/reference.hpp include/1_core/logic_node.hpp src/2_transformer/cnf/test_quantifier_cnf_transformer.cpp
 	g++ $(CFLAGS) -o obj/test_quantifier_cnf_transformer.o -c src/2_transformer/cnf/test_quantifier_cnf_transformer.cpp
-test_cnf_transformer.o: src/2_transformer/test_cnf_transformer.cpp
+test_cnf_transformer.o: include/0_infrastructure/exception.hpp include/0_infrastructure/reference.hpp include/1_core/logic_node.hpp src/2_transformer/test_cnf_transformer.cpp
 	g++ $(CFLAGS) -o obj/test_cnf_transformer.o -c src/2_transformer/test_cnf_transformer.cpp
 exception.o: include/0_infrastructure/exception.hpp
 	g++ $(CFLAGS) -o obj/exception.o -c src/0_infrastructure/exception.cpp
-logic_node.o: src/1_core/logic_node.cpp
+logic_node.o: include/0_infrastructure/exception.hpp include/0_infrastructure/reference.hpp include/1_core/logic_node.hpp src/1_core/logic_node.cpp
 	g++ $(CFLAGS) -o obj/logic_node.o -c src/1_core/logic_node.cpp
-negater.o: src/2_transformer/negater.cpp
+negater.o: include/0_infrastructure/exception.hpp include/0_infrastructure/reference.hpp include/1_core/logic_node.hpp include/negater.hpp src/2_transformer/negater.cpp
 	g++ $(CFLAGS) -o obj/negater.o -c src/2_transformer/negater.cpp
-implication_cnf_transformer.o: src/2_transformer/cnf/implication_cnf_transformer.cpp
+implication_cnf_transformer.o: include/0_infrastructure/exception.hpp include/0_infrastructure/reference.hpp include/1_core/logic_node.hpp include/implication_cnf_transformer.hpp src/2_transformer/cnf/implication_cnf_transformer.cpp
 	g++ $(CFLAGS) -o obj/implication_cnf_transformer.o -c src/2_transformer/cnf/implication_cnf_transformer.cpp
-negation_cnf_transformer.o: src/2_transformer/cnf/negation_cnf_transformer.cpp
+negation_cnf_transformer.o: include/0_infrastructure/exception.hpp include/0_infrastructure/reference.hpp include/1_core/logic_node.hpp include/negation_cnf_transformer.hpp src/2_transformer/cnf/negation_cnf_transformer.cpp
 	g++ $(CFLAGS) -o obj/negation_cnf_transformer.o -c src/2_transformer/cnf/negation_cnf_transformer.cpp
-connective_cnf_transformer.o: src/2_transformer/cnf/connective_cnf_transformer.cpp
+connective_cnf_transformer.o: include/0_infrastructure/exception.hpp include/0_infrastructure/reference.hpp include/1_core/logic_node.hpp include/connective_cnf_transformer.hpp src/2_transformer/cnf/connective_cnf_transformer.cpp
 	g++ $(CFLAGS) -o obj/connective_cnf_transformer.o -c src/2_transformer/cnf/connective_cnf_transformer.cpp
-quantifier_cnf_transformer.o: src/2_transformer/cnf/quantifier_cnf_transformer.cpp
+quantifier_cnf_transformer.o: include/0_infrastructure/exception.hpp include/0_infrastructure/reference.hpp include/1_core/logic_node.hpp include/quantifier_cnf_transformer.hpp src/2_transformer/cnf/quantifier_cnf_transformer.cpp
 	g++ $(CFLAGS) -o obj/quantifier_cnf_transformer.o -c src/2_transformer/cnf/quantifier_cnf_transformer.cpp
-cnf_transformer.o: src/2_transformer/cnf_transformer.cpp
+cnf_transformer.o: include/0_infrastructure/exception.hpp include/0_infrastructure/reference.hpp include/1_core/logic_node.hpp include/cnf_transformer.hpp src/2_transformer/cnf_transformer.cpp
 	g++ $(CFLAGS) -o obj/cnf_transformer.o -c src/2_transformer/cnf_transformer.cpp
