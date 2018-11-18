@@ -27,6 +27,8 @@ test_quantifier_cnf_transformer: test_quantifier_cnf_transformer.o quantifier_cn
 	g++ -o bin/test_quantifier_cnf_transformer obj/test_quantifier_cnf_transformer.o obj/quantifier_cnf_transformer.o  obj/logic_node.o obj/exception.o
 test_cnf_transformer: test_cnf_transformer.o cnf_transformer.o quantifier_cnf_transformer.o connective_cnf_transformer.o negation_cnf_transformer.o implication_cnf_transformer.o negater.o logic_node.o exception.o  
 	g++ -o bin/test_cnf_transformer obj/test_cnf_transformer.o obj/cnf_transformer.o obj/quantifier_cnf_transformer.o obj/connective_cnf_transformer.o obj/negation_cnf_transformer.o obj/implication_cnf_transformer.o obj/negater.o obj/logic_node.o obj/exception.o
+test_skolemization: test_skolemization.o skolemization.o logic_node.o exception.o
+	g++ -o bin/test_skolemization obj/test_skolemization.o obj/skolemization.o obj/logic_node.o obj/exception.o 
 test_reference.o: src/test_reference.cpp
 	g++ $(CFLAGS) -o obj/test_reference.o -c src/test_reference.cpp
 test_node.o: src/test_node.cpp
@@ -43,6 +45,8 @@ test_quantifier_cnf_transformer.o: src/test_quantifier_cnf_transformer.cpp
 	g++ $(CFLAGS) -o obj/test_quantifier_cnf_transformer.o -c src/test_quantifier_cnf_transformer.cpp
 test_cnf_transformer.o: src/test_cnf_transformer.cpp
 	g++ $(CFLAGS) -o obj/test_cnf_transformer.o -c src/test_cnf_transformer.cpp
+test_skolemization.o: src/test_skolemization.cpp
+	g++ $(CFLAGS) -o obj/test_skolemization.o -c src/test_skolemization.cpp
 exception.o: src/exception.hpp src/exception.cpp
 	g++ $(CFLAGS) -o obj/exception.o -c src/exception.cpp
 logic_node.o: src/exception.hpp src/reference.hpp src/logic_node.hpp src/logic_node.cpp
@@ -59,3 +63,5 @@ quantifier_cnf_transformer.o: src/reference.hpp src/quantifier_cnf_transformer.h
 	g++ $(CFLAGS) -o obj/quantifier_cnf_transformer.o -c src/quantifier_cnf_transformer.cpp
 cnf_transformer.o: src/reference.hpp src/cnf_transformer.hpp src/cnf_transformer.cpp
 	g++ $(CFLAGS) -o obj/cnf_transformer.o -c src/cnf_transformer.cpp
+skolemization.o:
+	g++ $(CFLAGS) -o obj/skolemization.o -c src/skolemization.cpp

@@ -66,4 +66,13 @@ bool operator==(const Ref<T> & t1, const Ref<U> &t2) {
   return (void*)t1.pointer == (void*)t2.pointer;
 }
 
+#include <functional>
+
+namespace std {
+  template<typename T>
+  struct hash<Ref<T>> {
+    std::hash<T*> _hash;
+    std::size_t operator()(Ref<T> const&ref) const noexcept { return  _hash(ref.pointer);}
+  };
+}
 #endif

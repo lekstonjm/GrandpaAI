@@ -11,6 +11,9 @@ struct ImplicationCNFTransformer {
     void Transform(Ref<Formula> &);
 private:
     void TransformStandard(Ref<Formula> &);
+    void TransformPredicate(Ref<Formula> &);
+    void TransformFunction(Ref<Function> &);
+    void TransformEquality(Ref<Formula> &);
     void TransformImplication(Ref<Formula> &);
     void TransformNegation(Ref<Formula> &);
     void TransformConnective(Ref<Formula> &);
