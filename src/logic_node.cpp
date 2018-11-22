@@ -1,10 +1,10 @@
-#include "logic_node.hpp"
 #include <sstream>
+#include <iostream>
+#include "logic_node.hpp"
 
 std::string NamedNode::toString() const{
   return name;
 }
-
 
 std::string Function::toString() const {
   std::stringstream ss;
@@ -12,10 +12,11 @@ std::string Function::toString() const {
   ss << prototype->name << "/" << prototype->arity;
   ss << "(";
   for(auto &term:terms) {
-    ss << (first?"":" ^ ") << (term.isNull()?"":term->toString());
+    ss << (first?"":" , ") << (term.isNull()?"":term->toString());
     first = false;
   }
   ss << ")";
+  return ss.str();
 }
 
 std::string Predicate::toString() const{
@@ -50,7 +51,7 @@ std::string Conjunction::toString() const {
     ss << (first?"":" ^ ") << (formula.isNull()?"":formula->toString());
     first = false;
   }
-  ss << " )";  
+  ss << " )";
   return ss.str();
 }
 
@@ -78,7 +79,7 @@ std::string Existantial::toString() const {
   ss << "E(";
   for (auto &variable : variables) {
     ss << (first?"":", ") << variable->toString();
-    first = false;  
+    first = false;
   }
   ss << ") ( "<< formula->toString() << " )";
   return ss.str();
@@ -89,8 +90,8 @@ std::string Universal::toString() const {
   bool first = true;
   ss << "A(";
   for (auto &variable : variables) {
-    ss << (first?"":", ") << variable->toString();  
-    first = false;  
+    ss << (first?"":", ") << variable->toString();
+    first = false;
   }
   ss << ") ( "<< formula->toString() << " )";
   return ss.str();

@@ -38,7 +38,7 @@ struct FunctionalNode : virtual LogicNode {
   FunctionalNode(const std::string &name_, int arity_) {
     prototype = Ref<Prototype>(new Prototype(name_, arity_));
   }
-  FunctionalNode(const Ref<Prototype> &prototype_):prototype(prototype_) {    
+  FunctionalNode(const Ref<Prototype> &prototype_):prototype(prototype_) {
     InvalidArgumentException::ThrowIf(prototype.isNull());
   }
   std::vector<Ref<Term>> terms;

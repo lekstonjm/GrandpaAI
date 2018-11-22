@@ -11,6 +11,7 @@ struct Counter {
   void Inc() { ++count; }
   bool Dec() { if (--count == 0) { return true; } return false; }
 };
+
 template <typename T>
 struct Ref {
   Counter *counter;
@@ -29,12 +30,14 @@ struct Ref {
     pointer  = dynamic_cast<T*>(cp.pointer); counter = cp.counter;
     if (counter != NULL) { counter->Inc();}
   }
+
   template<typename U>
   Ref<U> cast() const {
     Ref<U> ref;
-    ref.assign<T>(*this);
+    ref.template assign<T>(*this);
     return ref;
   }
+
   Ref() { pointer = NULL; counter = NULL; }
   Ref(T *ptr) {  pointer = NULL; counter = NULL; if (ptr != NULL) { pointer = ptr; counter = new Counter(); } }
   Ref(const Ref<T> &cp) {
@@ -46,21 +49,26 @@ struct Ref {
     assign<T>(cp);
     return *this;
   }
-  
+
   virtual ~Ref() {
     clear();
   }
 
   T &operator*() {return *pointer;}
   const T &operator*() const {return *pointer;}
+
   T *operator->() {return pointer;}
   const T*operator->()const{return pointer;}
+
   template<typename U>
   U *as() { return dynamic_cast<U*>(pointer); }
+
   template<typename U>
   const U *as() const { return dynamic_cast<U*>(pointer); }
+
   bool isNull() const { return pointer == NULL;}
 };
+
 template<typename T,typename U>
 bool operator==(const Ref<T> & t1, const Ref<U> &t2) {
   return (void*)t1.pointer == (void*)t2.pointer;

@@ -1,5 +1,7 @@
 #include <iostream>
+#include <typeinfo>
 #include "logic_node.hpp"
+
 
 int main() {
   try {
@@ -25,6 +27,12 @@ int main() {
     UX->variables.push_back(Y);
     UX->formula.assign<Implication>(I);
     std::cout << UX->toString() << std::endl;
+
+    Ref<Prototype> prototype(new Prototype("test",1));
+    Ref<Function> function(new Function(prototype));
+    Ref<Variable> variable(new Variable("x"));
+    function->terms.push_back(variable.cast<Term>());
+    std::cout << function->toString() << std::endl;
   } catch(...) {
     std::cout<<"Exception occured" << std::endl;
   }

@@ -8,13 +8,14 @@ tests: test_reference \
 		test_negation_cnf_transformer \
 		test_connective_cnf_transformer \
 		test_quantifier_cnf_transformer \
-		test_cnf_transformer
+		test_cnf_transformer \
+		test_skolemization
 clean:
 	rm -r obj bin
 test_reference: test_reference.o exception.o
 	g++ -o bin/test_reference obj/test_reference.o obj/exception.o
 test_node: test_node.o logic_node.o exception.o
-	g++ -o bin/test_node  obj/logic_node.o obj/test_node.o obj/exception.o
+	g++ -g -o bin/test_node obj/logic_node.o obj/test_node.o obj/exception.o
 test_negater: test_negater.o negater.o logic_node.o exception.o
 	g++ -o bin/test_negater obj/logic_node.o obj/negater.o obj/test_negater.o obj/exception.o
 test_implication_cnf_transformer: test_implication_cnf_transformer.o implication_cnf_transformer.o logic_node.o exception.o
@@ -25,14 +26,14 @@ test_connective_cnf_transformer: test_connective_cnf_transformer.o connective_cn
 	g++ -o bin/test_connective_cnf_transformer obj/test_connective_cnf_transformer.o obj/connective_cnf_transformer.o  obj/logic_node.o obj/exception.o
 test_quantifier_cnf_transformer: test_quantifier_cnf_transformer.o quantifier_cnf_transformer.o logic_node.o exception.o
 	g++ -o bin/test_quantifier_cnf_transformer obj/test_quantifier_cnf_transformer.o obj/quantifier_cnf_transformer.o  obj/logic_node.o obj/exception.o
-test_cnf_transformer: test_cnf_transformer.o cnf_transformer.o quantifier_cnf_transformer.o connective_cnf_transformer.o negation_cnf_transformer.o implication_cnf_transformer.o negater.o logic_node.o exception.o  
+test_cnf_transformer: test_cnf_transformer.o cnf_transformer.o quantifier_cnf_transformer.o connective_cnf_transformer.o negation_cnf_transformer.o implication_cnf_transformer.o negater.o logic_node.o exception.o
 	g++ -o bin/test_cnf_transformer obj/test_cnf_transformer.o obj/cnf_transformer.o obj/quantifier_cnf_transformer.o obj/connective_cnf_transformer.o obj/negation_cnf_transformer.o obj/implication_cnf_transformer.o obj/negater.o obj/logic_node.o obj/exception.o
 test_skolemization: test_skolemization.o skolemization.o logic_node.o exception.o
-	g++ -o bin/test_skolemization obj/test_skolemization.o obj/skolemization.o obj/logic_node.o obj/exception.o 
+	g++ -o bin/test_skolemization obj/test_skolemization.o obj/skolemization.o obj/logic_node.o obj/exception.o
 test_reference.o: src/test_reference.cpp
 	g++ $(CFLAGS) -o obj/test_reference.o -c src/test_reference.cpp
 test_node.o: src/test_node.cpp
-	g++ $(CFLAGS) -o obj/test_node.o -c src/test_node.cpp
+	g++ $(CFLAGS) -g -o obj/test_node.o -c src/test_node.cpp
 test_negater.o: src/test_negater.cpp
 	g++ $(CFLAGS) -o obj/test_negater.o -c src/test_negater.cpp
 test_implication_cnf_transformer.o: src/test_implication_cnf_transformer.cpp
