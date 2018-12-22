@@ -1,2 +1,2 @@
-# mypl
-Some investigation over logic programming and theorem prover. 
+# GrandpaAI
+Some investigations over logic programming and theorem prover.   
